@@ -23,7 +23,7 @@ Public Class Main
             Text = Text & "Updater"
             CheckBox1.Hide()
             Button1.Hide()
-            Label1.Text = "Installing The MineUK Launcher..."
+            Label1.Text = "Updating The MineUK Launcher..."
             Label2.Show()
             ProgressBar1.Show()
             BackgroundWorker1.RunWorkerAsync()
@@ -33,6 +33,7 @@ Public Class Main
             Button1.Show()
             Label2.Hide()
             ProgressBar1.Hide()
+            Label1.Cursor = Cursors.Hand
         End If
         Button1.Enabled = CheckBox1.Checked
     End Sub
@@ -40,6 +41,7 @@ Public Class Main
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         CheckBox1.Hide()
         Button1.Hide()
+        Label1.Cursor = Cursors.Default
         Label1.Text = "Installing The MineUK Launcher..."
         Label2.Show()
         ProgressBar1.Show()
@@ -85,9 +87,9 @@ Public Class Main
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker2.DoWork
         Try
             For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
-                If Path.GetFileName(i) = "Tekkit" Then
+                If Path.GetFileName(i) = "Direwolf20" Then
                 Else
-                    If Path.GetFileName(i) = "FTB" Then
+                    If Path.GetFileName(i) = "Vanilla" Then
                     Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
                     End If
                 End If
@@ -199,5 +201,11 @@ Public Class Main
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
         Button1.Enabled = CheckBox1.Checked
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+        If Label1.Text.Contains("terms") Then
+            Process.Start("http://terms.mineuk.com")
+        End If
     End Sub
 End Class
