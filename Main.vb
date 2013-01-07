@@ -85,6 +85,9 @@ Public Class Main
     End Sub
 
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker2.DoWork
+        If My.Computer.FileSystem.DirectoryExists(Environ("appdata") & "\MineUK Launcher") Then
+        Else : My.Computer.FileSystem.CreateDirectory(Environ("appdata") & "\MineUK Launcher")
+        End If
         Try
             For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
                 If Path.GetFileName(i) = "Direwolf20" Then
@@ -102,18 +105,6 @@ Public Class Main
             Next
         Catch ex As Exception
         End Try
-        If My.Computer.FileSystem.DirectoryExists(Environ("appdata") & "\MineUK Launcher") Then
-        Else : My.Computer.FileSystem.CreateDirectory(Environ("appdata") & "\MineUK Launcher")
-        End If
-        If My.Computer.FileSystem.FileExists(Environ("appdata") & "\MineUK Launcher\script.bat") Then
-            My.Computer.FileSystem.DeleteFile(Environ("appdata") & "\MineUK Launcher\script.bat")
-        End If
-        If My.Computer.FileSystem.FileExists(Environ("appdata") & "\MineUK Launcher\7za.exe") Then
-            My.Computer.FileSystem.DeleteFile(Environ("appdata") & "\MineUK Launcher\7za.exe")
-        End If
-        If My.Computer.FileSystem.FileExists(Environ("appdata") & "\MineUK Launcher\files.7z") Then
-            My.Computer.FileSystem.DeleteFile(Environ("appdata") & "\MineUK Launcher\files.7z")
-        End If
     End Sub
 
     Private Sub BackgroundWorker2_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker2.RunWorkerCompleted
