@@ -85,23 +85,144 @@ Public Class Main
     End Sub
 
     Private Sub BackgroundWorker2_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker2.DoWork
-        If My.Computer.FileSystem.DirectoryExists(Environ("appdata") & "\MineUK Launcher") Then
-        Else : My.Computer.FileSystem.CreateDirectory(Environ("appdata") & "\MineUK Launcher")
-        End If
         Try
             For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher")
-                If Path.GetFileName(i) = "Direwolf20" Then
-                Else
-                    If Path.GetFileName(i) = "Vanilla" Then
-                    Else : My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                Try
+                    If Path.GetFileName(i) = "Direwolf20" Then
+                    Else
+                        If Path.GetFileName(i) = "Vanilla" Then
+                        Else
+                            Try
+                                My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                            Catch ex As Exception
+                            End Try
+                        End If
                     End If
-                End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists(Environ("appdata") & "\MineUK Launcher\Direwolf20\.minecraft") Then
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory(Environ("appdata") & "\MineUK Launcher\Direwolf20\.minecraft")
+                Catch ex As Exception
+                End Try
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher\Direwolf20")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            If My.Computer.FileSystem.DirectoryExists(Environ("appdata") & "\MineUK Launcher\Vanilla\.minecraft") Then
+            Else
+                Try
+                    My.Computer.FileSystem.CreateDirectory(Environ("appdata") & "\MineUK Launcher\Vanilla\.minecraft")
+                Catch ex As Exception
+                End Try
+            End If
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetDirectories(Environ("appdata") & "\MineUK Launcher\Vanilla")
+                Try
+                    If Path.GetFileName(i) = ".minecraft" Then
+                    Else
+                        Try
+                            My.Computer.FileSystem.DeleteDirectory(Path.GetFullPath(i), FileIO.DeleteDirectoryOption.DeleteAllContents)
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
         Try
             For Each i As String In Directory.GetFiles(Environ("appdata") & "\MineUK Launcher")
-                My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                Try
+                    My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetFiles(Environ("appdata") & "\MineUK Launcher\Direwolf20\.minecraft")
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
+            Next
+        Catch ex As Exception
+        End Try
+        Try
+            For Each i As String In Directory.GetFiles(Environ("appdata") & "\MineUK Launcher\Vanilla\.minecraft")
+                Try
+                    If Path.GetFileName(i).Contains("log") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("optifog") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("ForgeModLoader") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                    If Path.GetFileName(i).Contains("lck") Then
+                        Try
+                            My.Computer.FileSystem.DeleteFile(Path.GetFullPath(i))
+                        Catch ex As Exception
+                        End Try
+                    End If
+                Catch ex As Exception
+                End Try
             Next
         Catch ex As Exception
         End Try
@@ -110,7 +231,7 @@ Public Class Main
     Private Sub BackgroundWorker2_RunWorkerCompleted(sender As Object, e As ComponentModel.RunWorkerCompletedEventArgs) Handles BackgroundWorker2.RunWorkerCompleted
         Label2.Text = ("Downloading 7zip...")
         ProgressBar1.Style = ProgressBarStyle.Blocks
-        WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/7za.exe"), Environ("appdata") & "\MineUK Launcher\7za.exe")
+        WC1.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/7za.exe"), Environ("appdata") & "\MineUK Launcher\7za.exe")
     End Sub
 
     Private Sub WC1_DownloadProgressChanged(ByVal sender As Object, ByVal e As DownloadProgressChangedEventArgs) Handles WC1.DownloadProgressChanged
@@ -119,7 +240,7 @@ Public Class Main
 
     Private Sub WC1_DownloadFileCompleted(sender As Object, e As ComponentModel.AsyncCompletedEventArgs) Handles WC1.DownloadFileCompleted
         Label2.Text = ("Downloading Core Files...")
-        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v3/files.7z"), Environ("appdata") & "\MineUK Launcher\files.7z")
+        WC2.DownloadFileAsync(New Uri("http://launcher.mineuk.com/v4/files.7z"), Environ("appdata") & "\MineUK Launcher\files.7z")
     End Sub
 
     Private Sub WC2_DownloadProgressChanged(ByVal sender As Object, ByVal e As DownloadProgressChangedEventArgs) Handles WC2.DownloadProgressChanged
@@ -134,18 +255,21 @@ Public Class Main
 
     Private Sub BackgroundWorker3_DoWork(sender As Object, e As ComponentModel.DoWorkEventArgs) Handles BackgroundWorker3.DoWork
         Dim writer As StreamWriter
-        writer = My.Computer.FileSystem.OpenTextFileWriter(Environ("appdata") & "\MineUK Launcher\Script.bat", True)
+        writer = My.Computer.FileSystem.OpenTextFileWriter(Environ("appdata") & "\MineUK Launcher\script.bat", True)
         Writer.WriteLine("@ECHO OFF")
         writer.WriteLine("@ECHO OFF")
         writer.WriteLine("cd " & """%appdata%\MineUK Launcher""")
         writer.WriteLine("7za  x files.7z * -y")
+        writer.WriteLine("CLS")
+        writer.WriteLine("DEL script.bat")
         writer.Close()
-        Thread.Sleep(200)
+        Thread.Sleep(150)
         writer.Dispose()
+        Thread.Sleep(100)
         Dim objProcesss As Process
         objProcesss = New Process()
         objProcesss.StartInfo.WorkingDirectory = Environ("appdata") & "\MineUK Launcher\"
-        objProcesss.StartInfo.FileName = "Script.bat"
+        objProcesss.StartInfo.FileName = "script.bat"
         objProcesss.StartInfo.WindowStyle = ProcessWindowStyle.Hidden
         objProcesss.Start()
         objProcesss.WaitForExit()
